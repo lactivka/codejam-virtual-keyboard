@@ -1,0 +1,74 @@
+.wrapper {
+  font-family: sans-serif;
+}
+
+.textarea {
+  display: block;
+  width: 800px;
+  height: 300px;
+  margin: 0 auto 10px;
+  padding: 10px;
+  font-size: 18px;
+  color: #444;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  height: 235px;
+  padding: 35px;
+  margin: auto;
+  background-color: #92af8a;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(46, 1fr);
+  grid-gap: 5px;
+  clear: both;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 8px;
+}
+.row :hover {
+  border: 5px outset;
+}
+
+.key {
+  grid-column-end: span 3;
+  text-align: center;
+  padding-top: 8px;
+  background-color: #e6dfdf;
+  border: solid;
+  border-color: gray;
+  border-radius: 5px;
+}
+.key :hover {
+  border: none;
+}
+
+.backspace,
+.capslock,
+.leftshift {
+  grid-column-end: span 7;
+}
+
+.tab {
+  grid-column-end: span 4;
+}
+
+.enter,
+.rightshift {
+  grid-column-end: span 6;
+}
+
+.space {
+  grid-column-end: span 22;
+}
+
+.tab, .backspace, .enter, .capslock, .del, .rightshift, .leftshift, .arrow, .ctrl, .win, .alt {
+  background-color: #f0d680;
+}
+
+/*# sourceMappingURL=style.css.map */
