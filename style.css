@@ -1,5 +1,6 @@
 .wrapper {
   font-family: sans-serif;
+  color: #444343;
 }
 
 .textarea {
@@ -33,12 +34,13 @@
 }
 .row :hover {
   border: 5px outset;
+  padding-top: 5px;
 }
 
 .key {
   grid-column-end: span 3;
   text-align: center;
-  padding-top: 8px;
+  padding-top: 9px;
   background-color: #e6dfdf;
   border: solid;
   border-color: gray;
@@ -48,27 +50,37 @@
   border: none;
 }
 
-.backspace,
-.capslock,
-.leftshift {
+.Backspace,
+.CapsLock,
+.ShiftLeft {
   grid-column-end: span 7;
 }
 
-.tab {
+.Tab {
   grid-column-end: span 4;
 }
 
-.enter,
-.rightshift {
+.Enter,
+.ShiftRight {
   grid-column-end: span 6;
 }
 
-.space {
+.Space {
   grid-column-end: span 22;
 }
 
-.tab, .backspace, .enter, .capslock, .del, .rightshift, .leftshift, .arrow, .ctrl, .win, .alt {
+.Tab, .Backspace, .Enter, .CapsLock, .Delete, .ShiftRight, .ShiftLeft, .ArrowUp, .ArrowLeft, .ArrowDown, .ArrowRight, .ControlLeft, .ControlRight, .OSLeft, .AltLeft, .AltRight {
   background-color: #f0d680;
+}
+
+.pressed {
+  /*transition: border .3s, background-color .2s;*/
+  background-color: #c1a1a1;
+  border: 5px inset;
+}
+
+.off {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */
