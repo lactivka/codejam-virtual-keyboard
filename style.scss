@@ -1,6 +1,7 @@
 .wrapper {
     font-family: sans-serif;
     color: #444343;
+    user-select: none;
 }
 
 .textarea {
@@ -80,6 +81,12 @@
 .pressed {
     background-color: #c1a1a1;
     border: 5px inset;
+}
+
+.pressedmouse {
+    background-color: #c1a1a1;
+    border-radius: 35%;
+    transition: border-radius .2s, background-color .2s;
 }
 
 .off {

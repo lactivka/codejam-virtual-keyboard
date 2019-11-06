@@ -154,8 +154,6 @@ document.addEventListener('keydown', function (event) {
             });
         }   
     }
-
-
 })
 
 // listen to event keyup from real keyboard
@@ -165,4 +163,67 @@ document.addEventListener('keyup', function(event) {
         unpressedKey.classList.remove("pressed");   
     } 
 })
+ // listen to event mousedown
+document.addEventListener('mousedown', function(event) {
+   
+    let addclass = event.target.classList;
+    
+    
+   // when click on textarea
+   if (addclass.contains("textarea")) {
+       return;
+   }
+   // when click on CapsLock
+   if (addclass.contains("CapsLock")) {
+       addclass.toggle("pressedmouse");    
+   }
+   
+   // print clicked key value in LowerCase
+   // when click on element with class key
+    if (addclass.contains("key")) {
+            addclass.add("pressedmouse");
+
+            if (!(addclass.contains("ControlLeft") || addclass.contains("AltLeft") || addclass.contains("OSLeft") ||
+                addclass.contains("ShiftLeft") || addclass.contains("CapsLock") || addclass.contains("Tab") ||
+                addclass.contains("Backspace") || addclass.contains("Delete") || addclass.contains("Enter") ||
+                addclass.contains("ControlRight") || addclass.contains("AltRight") || addclass.contains("ShiftRight"))) {
+                    textarea.value += event.target.firstChild.innerHTML.toLowerCase();
+            }        
+    }
+    else{
+        // when click on span element 
+        if (addclass.contains("on")) {
+        if (event.target.closest("div").classList.contains("CapsLock")){
+               
+            event.target.closest("div").classList.toggle("pressedmouse");
+        }
+        else {
+            event.target.closest("div").classList.add("pressedmouse");
+            
+            if (!(event.target.closest("div").classList.contains("ControlLeft") || event.target.closest("div").classList.contains("AltLeft") || event.target.closest("div").classList.contains("OSLeft") ||
+                event.target.closest("div").classList.contains("ShiftLeft") || event.target.closest("div").classList.contains("CapsLock") || event.target.closest("div").classList.contains("Tab") ||
+                event.target.closest("div").classList.contains("Backspace") || event.target.closest("div").classList.contains("Delete") || event.target.closest("div").classList.contains("Enter") ||
+                event.target.closest("div").classList.contains("ControlRight") || event.target.closest("div").classList.contains("AltRight") || event.target.closest("div").classList.contains("ShiftRight"))) {
+                    textarea.value += event.target.innerHTML.toLowerCase();
+                } 
+           }
+       }       
+    } 
+})
+
+// listen to mouseup event
+document.addEventListener('mouseup', function(event) {
+    
+    // remove class pressedmouse from clicked element (except for CapsLock)
+    if (!event.target.classList.contains("CapsLock")) {
+        if (event.target.classList.contains("on")) {
+            event.target.closest("div").classList.remove("pressedmouse");
+        }
+    else {
+       event.target.classList.remove("pressedmouse"); 
+    }
+    }    
+})
+
+
 
