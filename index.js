@@ -1,11 +1,13 @@
+// RU keyboard array
 let keys = [
     ["Ё", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace"],
     ["Tab","Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ", "\\","Del"],
     ["CapsLock", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "Enter"],
     ["Shift", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", ".", "▲", "Shift"],
-    ["Ctrl", "Win", "Alt", "", "Alt", "◄", "▼", "►", "Ctrl"]
+    ["Ctrl", "Win", "Alt", " ", "Alt", "◄", "▼", "►", "Ctrl"]
 ];
 
+// key's codes array
 let codes = [
     ["Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Minus", "Equal", "Backspace"],
     ["Tab", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "BracketRight", "Backslash", "Delete"],
@@ -14,35 +16,40 @@ let codes = [
     ["ControlLeft", "OSLeft", "AltLeft", "Space", "AltRight", "ArrowLeft", "ArrowDown", "ArrowRight", "ControlRight"]
 ];
 
+// EN keyboard array
 let keysEn = [
     ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace"],
     ["Tab","Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\","Del"],
     ["CapsLock", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "Enter"],
     ["Shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "▲", "Shift"],
-    ["Ctrl", "Win", "Alt", "", "Alt", "◄", "▼", "►", "Ctrl"]
+    ["Ctrl", "Win", "Alt", " ", "Alt", "◄", "▼", "►", "Ctrl"]
 ];
 
 
-
+// create class wrapper and add div element to body
 let wrapper = document.createElement('div');
 wrapper.className = "wrapper";
 document.body.append(wrapper);
 
+// create textarea with class textarea and add to body into wrapper
 let textarea = document.createElement('textarea');
 textarea.className = "textarea";
 wrapper.append(textarea);
 textarea.focus();
 
+// create div element with class keyboard and add to body into wrapper
 let keyboard = document.createElement('div');
 keyboard.className = "keyboard";
 wrapper.append( keyboard);
 
-for (let i = 0; i < 5; i++) {
+// create keys on keyboard
+for (let i = 0; i < 5; i++) { // add five rows with class row into keyboard
     
     let row = document.createElement('div');
     row.classList.add("row");
     keyboard.append(row);
     
+        // add keys into rows with classes key and keycode of the key
         for (let j = 0; j < keys[i].length; j++) {
             
             let key = document.createElement('div');
@@ -50,6 +57,8 @@ for (let i = 0; i < 5; i++) {
             key.classList.add(codes[i][j]);
             row.append(key);
             
+            // add two span elements (one with classes ru and on and other with class en and off) into every key
+            // add value of every span with class ru from RU keyboard array for and with class en from EN keyboard array
             let span = document.createElement('span');
             span.classList.add("ru");
             span.classList.add("on");
@@ -65,19 +74,51 @@ for (let i = 0; i < 5; i++) {
     
 }
 
+// listen to event keydown from real keyboard
 document.addEventListener('keydown', function (event) {
     
+    // turn off default behavior of real keyboard keys
     event.preventDefault();
 
+    // find what pressed key by selector that equal event.code
     let pressedKey = document.querySelector("." + event.code);
 
-    if (!(pressedKey.classList.contains("ControlLeft") || pressedKey.classList.contains("AltLeft") || pressedKey.classList.contains("OSLeft") ||
+     // in case of CapsLock it stay pressed until we press it again
+    if (pressedKey.classList.contains("CapsLock")) {
+        pressedKey.classList.toggle("pressed");
+    }
+    else {
+       pressedKey.classList.add("pressed"); 
+    }
+
+    // select all elements with class pressed
+    let pressedAll = document.querySelectorAll(".pressed");
+
+    // print to textarea value from span element that responds pressed key (except for Alt, Shift, CapsLock etc.) and have class on
+    if (pressedAll.length > 1) {
+        for (let i = 0; i < pressedAll.length; i++) {
+            if (pressedAll[i].classList.contains("CapsLock") || pressedAll[i].classList.contains("ShiftLeft") || pressedAll[i].classList.contains("ShiftRight")) {
+                if (!(pressedKey.classList.contains("ControlLeft") || pressedKey.classList.contains("AltLeft") || pressedKey.classList.contains("OSLeft") ||
+                pressedKey.classList.contains("ShiftLeft") || pressedKey.classList.contains("CapsLock") || pressedKey.classList.contains("Tab") ||
+                pressedKey.classList.contains("Backspace") || pressedKey.classList.contains("Delete") || pressedKey.classList.contains("Enter") ||
+                pressedKey.classList.contains("ControlRight") || pressedKey.classList.contains("AltRight") || pressedKey.classList.contains("ShiftRight"))){
+                   // print in UpperCase
+                    textarea.value += pressedKey.querySelector(".on").innerHTML;  
+                    return;
+                }   
+            }
+        }
+    }
+    else if (!(pressedKey.classList.contains("ControlLeft") || pressedKey.classList.contains("AltLeft") || pressedKey.classList.contains("OSLeft") ||
     pressedKey.classList.contains("ShiftLeft") || pressedKey.classList.contains("CapsLock") || pressedKey.classList.contains("Tab") ||
     pressedKey.classList.contains("Backspace") || pressedKey.classList.contains("Delete") || pressedKey.classList.contains("Enter") ||
     pressedKey.classList.contains("ControlRight") || pressedKey.classList.contains("AltRight") || pressedKey.classList.contains("ShiftRight"))) {
-        textarea.value += pressedKey.querySelector(".on").innerHTML;
+        
+        // print in LowerCase
+        textarea.value += pressedKey.querySelector(".on").innerHTML.toLowerCase();
     }
 
+    // in case of pressed Backspace remove text from textarea
     if (pressedKey.classList.contains("Backspace")) {
         let data = textarea.value;
         textarea.value = "";
@@ -86,11 +127,7 @@ document.addEventListener('keydown', function (event) {
        } 
     }
     
-    pressedKey.classList.add("pressed");
-    
-   
-    let pressedAll = document.querySelectorAll(".pressed");
-   
+    // if we press ShiftLeft and ControlLeft together the language of keyboard change by passing class on to another span element
     let changelang = 0;
     for (let i = 0; i < pressedAll.length; i++) {
         
@@ -117,10 +154,15 @@ document.addEventListener('keydown', function (event) {
             });
         }   
     }
+
+
 })
 
+// listen to event keyup from real keyboard
 document.addEventListener('keyup', function(event) {
     let unpressedKey = document.querySelector("." + event.code);
-    unpressedKey.classList.remove("pressed");
+    if (!unpressedKey.classList.contains("CapsLock")) {
+        unpressedKey.classList.remove("pressed");   
+    } 
 })
 

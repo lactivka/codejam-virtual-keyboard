@@ -74,7 +74,6 @@
 }
 
 .pressed {
-  /*transition: border .3s, background-color .2s;*/
   background-color: #c1a1a1;
   border: 5px inset;
 }
