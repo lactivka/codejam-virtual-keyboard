@@ -31,6 +31,7 @@ document.body.append(wrapper);
 let textarea = document.createElement('textarea');
 textarea.className = "textarea";
 wrapper.append(textarea);
+textarea.focus();
 
 let keyboard = document.createElement('div');
 keyboard.className = "keyboard";
@@ -65,9 +66,28 @@ for (let i = 0; i < 5; i++) {
 }
 
 document.addEventListener('keydown', function (event) {
+    
+    event.preventDefault();
 
     let pressedKey = document.querySelector("." + event.code);
+
+    if (!(pressedKey.classList.contains("ControlLeft") || pressedKey.classList.contains("AltLeft") || pressedKey.classList.contains("OSLeft") ||
+    pressedKey.classList.contains("ShiftLeft") || pressedKey.classList.contains("CapsLock") || pressedKey.classList.contains("Tab") ||
+    pressedKey.classList.contains("Backspace") || pressedKey.classList.contains("Delete") || pressedKey.classList.contains("Enter") ||
+    pressedKey.classList.contains("ControlRight") || pressedKey.classList.contains("AltRight") || pressedKey.classList.contains("ShiftRight"))) {
+        textarea.value += pressedKey.querySelector(".on").innerHTML;
+    }
+
+    if (pressedKey.classList.contains("Backspace")) {
+        let data = textarea.value;
+        textarea.value = "";
+        for (let i = 0; i < data.length - 1; i++) {
+           textarea.value += data[i];
+       } 
+    }
+    
     pressedKey.classList.add("pressed");
+    
    
     let pressedAll = document.querySelectorAll(".pressed");
    
